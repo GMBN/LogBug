@@ -1,6 +1,6 @@
 <?php
 return [
-    'controllers' => [
+    'service_manager' => [
         'invokables' => [
            'LogBug\Service\Email' => 'LogBug\Service\Email',
         ],
