@@ -1,0 +1,26 @@
+{
+    "name" : "gmbn/logbug",
+    "description" : "Logging of ZF2 exceptions and errors",
+    "require" : {
+        "php" : ">=5.4.0",
+        "zendframework/zendframework" : ">=2.3.2,<3.0.0"
+    },      
+    "authors" : [ 
+        {
+            "name" : "Gian Nunes",
+            "email" : "gianboschette@gmail.com"
+        } 
+    ],
+    "keywords" : [ "bug", "log","logger", "module", "zf2" ],
+    "autoload" : {
+        "psr-4" : {
+            "LogBug\\" : "src/"
+        },
+        "psr-0" : {
+            "LogBug\\" : "src/"
+        },
+        "classmap" : [ "./" ]
+    },
+    "type" : "library",
+    "homepage" : "https://github.com/GMBN/LogBug.git"
+}

@@ -7,7 +7,7 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        include __DIR__ . '/src/Service/error.php';
+        include __DIR__ . '/src/include/error.php';
         
         $application        =   $e->getTarget();
         $eventManager       =   $application->getEventManager();
