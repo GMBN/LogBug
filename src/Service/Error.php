@@ -1,4 +1,5 @@
 <?php
+
 namespace LogBug\Service;
 
 class Error {
@@ -11,8 +12,8 @@ class Error {
 //catch function
     function shut() {
         $error = error_get_last();
-        if($error){
-        handler($error['type'], $error['message'], $error['file'], $error['line']);
+        if ($error) {
+            $this->handler($error['type'], $error['message'], $error['file'], $error['line']);
         }
     }
 
