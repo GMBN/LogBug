@@ -21,11 +21,12 @@ class Email implements ServiceLocatorAwareInterface {
 
         $transport = new \Zend\Mail\Transport\Smtp($smtpOptions);
         $transport->send($message);
-        
+
         $this->logWrite($error);
     }
 
     public function message($error, $typestr) {
+        $currentDate = new \DateTime('now');
         $configEmail = $this->getConfigEmail();
         $configSend = $configEmail['send'];
         $from = $configSend['from'];
@@ -38,7 +39,11 @@ class Email implements ServiceLocatorAwareInterface {
             $message->addTo($emailTo);
         }
         $message->setSubject($subject . ' - ' . $typestr);
-        $message->setBody($error);
+        $errorMessage = "Host => " . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . "\n"
+                . "IP Request => " . $_SERVER['REMOTE_ADDR'] . "\n"
+                . "Date => " . $currentDate->format('Y-m-d H:i') . "\n " 
+                . $error;
+        $message->setBody($errorMessage);
         $message->setEncoding("UTF-8");
         return $message;
     }
@@ -83,7 +88,7 @@ class Email implements ServiceLocatorAwareInterface {
 
 //log it!
         $delimiter = "\n ____________ \n";
-        $logger->crit($message.$delimiter);
+        $logger->crit($message . $delimiter);
     }
 
 }

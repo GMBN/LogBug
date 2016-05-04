@@ -73,13 +73,9 @@ class Error {
                 break;
         }
 
-        $currentDate = new \DateTime('now');
         $message = " Error PHP \n"
                 . "file => " . $errfile . " at line : " . $errline . "\n"
-                . "type error => " . $typestr . " : " . $errstr . "\n "
-                . "Host => " . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . "\n"
-                . "IP Request => " . $_SERVER['REMOTE_ADDR'] . "\n"
-                . "Date => " . $currentDate->format('Y-m-d H:i');
+                . "type error => " . $typestr . " : " . $errstr . "\n ";
 
 //mail 
         $mail = $this->mail->send($message,$typestr);
