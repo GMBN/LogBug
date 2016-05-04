@@ -2,12 +2,13 @@
 namespace LogBug;
 
 use Zend\Mvc\MvcEvent;
+use LogBug\Service\Error as LogBugError;
 
 class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        include __DIR__ . '/src/include/error.php';
+       $logbug= new LogBugError();
         
         $application        =   $e->getTarget();
         $eventManager       =   $application->getEventManager();
