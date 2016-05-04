@@ -2,9 +2,15 @@
 
 namespace LogBug\Service;
 
+use LogBug\Service\Email as EmailErro;
+
 class Error {
 
-    public function __construct() {
+    protected $mail;
+
+    public function __construct(EmailErro $mail) {
+        $this->mail = $mail;
+
         register_shutdown_function(array($this, 'shut'));
         set_error_handler(array($this, 'handler'));
     }
@@ -67,27 +73,16 @@ class Error {
                 break;
         }
 
-        $message = " Error PHP in file : " . $errfile . " at line : " . $errline . "
-    with type error : " . $typestr . " : " . $errstr . " in " . $_SERVER['REQUEST_URI'];
+        $currentDate = new \DateTime('now');
+        $message = " Error PHP \n"
+                . "file => " . $errfile . " at line : " . $errline . "\n"
+                . "type error => " . $typestr . " : " . $errstr . "\n "
+                . "Host => " . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . "\n"
+                . "IP Request => " . $_SERVER['REMOTE_ADDR'] . "\n"
+                . "Date => " . $currentDate->format('Y-m-d H:i');
 
-        //echo $message;
-//logging...
-        $logger = new \Zend\Log\Logger;
-//stream writer         
-        $writerStream = new \Zend\Log\Writer\Stream('./data/logs/' . date('Ymd') . '-log.txt');
-//mail writer
-        $mail = new \Zend\Mail\Message();
-        $mail->setFrom('gianboschette@gmail.com', 'ERROR');
-        $mail->addTo('suporte@correspondentedinamico.com.br', 'BTI');
-        $transport = new \Zend\Mail\Transport\Sendmail();
-        $writerMail = new \Zend\Log\Writer\Mail($mail, $transport);
-        $writerMail->setSubjectPrependText("PHP Error :  $typestr : $errstr ");
-
-        $logger->addWriter($writerStream);
-        $logger->addWriter($writerMail);
-
-//log it!
-        $logger->crit($message);
+//mail 
+        $mail = $this->mail->send($message,$typestr);
     }
 
 }
