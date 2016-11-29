@@ -1,6 +1,7 @@
 {
     "name" : "gmbn/logbug",
     "description" : "Logging of ZF2 exceptions and errors",
+    "license": "MIT",
     "require" : {
         "php" : ">=5.4.0",
         "zendframework/zendframework" : ">=2.3.2,<3.0.0"
